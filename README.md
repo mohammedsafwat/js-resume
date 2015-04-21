@@ -1,3 +1,6 @@
+A Javascript online resume, done as a project for Udacity Javascript course.
+
+### By the end
 Your resume will look something like this
 ![](http://i.imgur.com/pWU1Xbl.png)
 
