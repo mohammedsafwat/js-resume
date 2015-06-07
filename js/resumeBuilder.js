@@ -1,21 +1,14 @@
-var tag_to_replace = "%data%";
-
-function insertDataInsideTag(tag, data)
-{
-	return tag.replace(tag_to_replace, data);
-}
-
 var bio = {
-	"contact" : {
+	"contacts" : {
 	"name" : "Mohammed Safwat",
 	"role" : "Mobile Developer",
 	"mobile" : "010*******8",
 	"email" : "m.safwat@spyros-games.com",
 	"twitter" : "@_MohamadSafwat",
 	"github" : "mohammedsafwat",
-	"blog" : "http://www.mohammedsafwat.com"
+	"blog" : "http://www.mohammedsafwat.com",
+	"location" : "Cairo, Egypt"
 	},
-	"location" : "Cairo, Egypt",
 	"bioPic" : "images/fry.jpg",
 	"welcomeMsg" : "Welcome to my resume!",
 	"skills" : ["Python", "Rails", "Ruby", "Scala", "Objective-C", "C++", "C#", "C", "Java"]
@@ -73,45 +66,94 @@ var education = {
 	"onlineCourses" : onlineCourses
 }
 
-$("#header").prepend(insertDataInsideTag(HTMLheaderRole, bio.contact.role));
-$("#header").prepend(insertDataInsideTag(HTMLheaderName, bio.contact.name));
-$("#header").append(insertDataInsideTag(HTMLbioPic, bio.bioPic));
-$("#header").append(insertDataInsideTag(HTMLwelcomeMsg, bio.welcomeMsg));
+var projects = {
+	"projects" : [ {
+		"title" : "Athorus",
+		"dates" : "Feb 2012",
+		"description" : "Twin stick shoot'em up mobile game",
+		"images" : ["http://38.media.tumblr.com/94db1bf261903f34490b2cb12b945113/tumblr_inline_nd4ivtXNWB1s9o6xc.png",
+					"http://38.media.tumblr.com/ecc4ca539086c5c44c726605c17df014/tumblr_inline_nd4iv2APVj1s9o6xc.png"
+					]
+	} ]
+}
 
-$("#header").append(HTMLskillsStart);
-for(var i = 0; i < bio.skills.length; i++)
+var tag_to_replace = "%data%";
+function insertDataInsideTag(tag, data)
 {
-	var skill = insertDataInsideTag(HTMLskills, bio.skills[i]);
-	$("#skills").append(skill);
+	return tag.replace(tag_to_replace, data);
 }
 
-$("#topContacts").append(insertDataInsideTag(HTMLemail, bio.contact.email));
-$("#topContacts").append(insertDataInsideTag(HTMLgithub, bio.contact.github));
-$("#topContacts").append(insertDataInsideTag(HTMLmobile, bio.contact.mobile));
-$("#topContacts").append(insertDataInsideTag(HTMLtwitter, bio.contact.twitter));
+bio.display = function() {
+	$("#header").prepend(insertDataInsideTag(HTMLheaderRole, bio.contacts.role));
+	$("#header").prepend(insertDataInsideTag(HTMLheaderName, bio.contacts.name));
+	$("#header").append(insertDataInsideTag(HTMLbioPic, bio.bioPic));
+	$("#header").append(insertDataInsideTag(HTMLwelcomeMsg, bio.welcomeMsg));
 
-$("#workExperience").append(HTMLworkStart);
-for(var i = 0; i < work["jobs"].length; i++)
-{
-	var work_entry = work["jobs"][i];
-	$(".work-entry").append(insertDataInsideTag(HTMLworkEmployer, work_entry["employer"]) + insertDataInsideTag(HTMLworkTitle, work_entry["title"]));
-	$(".work-entry").append(insertDataInsideTag(HTMLworkDates, work_entry.dates));
-	$(".work-entry").append("<br>");
-	$(".work-entry").append(insertDataInsideTag(HTMLworkLocation, work_entry.location));
-	$(".work-entry").append(insertDataInsideTag(HTMLworkDescription, work_entry.description));
+	if(bio.skills.length > 0)
+	{
+		$("#header").append(HTMLskillsStart);
+
+		for(var i = 0; i < bio.skills.length; i++)
+		{
+			var skill = insertDataInsideTag(HTMLskills, bio.skills[i]);
+			$("#skills").append(skill);
+		}
+	}
+
+	$("#topContacts").append(insertDataInsideTag(HTMLemail, bio.contacts.email));
+	$("#topContacts").append(insertDataInsideTag(HTMLgithub, bio.contacts.github));
+	$("#topContacts").append(insertDataInsideTag(HTMLmobile, bio.contacts.mobile));
+	$("#topContacts").append(insertDataInsideTag(HTMLtwitter, bio.contacts.twitter));
+	$("#footerContacts").append(insertDataInsideTag(HTMLemail, bio.contacts.email));
+	$("#footerContacts").append(insertDataInsideTag(HTMLgithub, bio.contacts.github));
+	$("#footerContacts").append(insertDataInsideTag(HTMLmobile, bio.contacts.mobile));
+	$("#footerContacts").append(insertDataInsideTag(HTMLtwitter, bio.contacts.twitter));
 }
 
-$("#education").append(HTMLschoolStart);
-for(var i = 0; i < education["schools"].length; i++) {
-	var school = education["schools"][i];
-	$(".education-entry").append(insertDataInsideTag(HTMLschoolName, school.name) + insertDataInsideTag(HTMLschoolDegree, school.degree));
-	$(".education-entry").append(insertDataInsideTag(HTMLschoolDates, school.dates));
-	$(".education-entry").append("<br>");
-	$(".education-entry").append(insertDataInsideTag(HTMLschoolLocation, school.location));
-	$(".education-entry").append(insertDataInsideTag(HTMLschoolMajor, school.major));
+work.display = function() {
+	for(job in work["jobs"])
+	{
+		$("#workExperience").append(HTMLworkStart);
+
+		var work_entry = work["jobs"][job];
+		$(".work-entry:last").append(insertDataInsideTag(HTMLworkEmployer, work_entry["employer"]) + insertDataInsideTag(HTMLworkTitle, work_entry["title"]));
+		$(".work-entry:last").append(insertDataInsideTag(HTMLworkDates, work_entry.dates));
+		$(".work-entry:last").append("<br>");
+		$(".work-entry:last").append(insertDataInsideTag(HTMLworkLocation, work_entry.location));
+		$(".work-entry:last").append(insertDataInsideTag(HTMLworkDescription, work_entry.description));
+	}
 }
 
-$("#footerContacts").append(insertDataInsideTag(HTMLemail, bio.contact.email));
-$("#footerContacts").append(insertDataInsideTag(HTMLgithub, bio.contact.github));
-$("#footerContacts").append(insertDataInsideTag(HTMLmobile, bio.contact.mobile));
-$("#footerContacts").append(insertDataInsideTag(HTMLtwitter, bio.contact.twitter));
+education.display = function() {
+	$("#education").append(HTMLschoolStart);
+	for(var i = 0; i < education["schools"].length; i++) {
+		var school = education["schools"][i];
+		$(".education-entry").append(insertDataInsideTag(HTMLschoolName, school.name) + insertDataInsideTag(HTMLschoolDegree, school.degree));
+		$(".education-entry").append(insertDataInsideTag(HTMLschoolDates, school.dates));
+		$(".education-entry").append("<br>");
+		$(".education-entry").append(insertDataInsideTag(HTMLschoolLocation, school.location));
+		$(".education-entry").append(insertDataInsideTag(HTMLschoolMajor, school.major));
+	}
+}
+
+projects.display = function() {
+	for(project in projects.projects) {
+		$("#projects").append(HTMLprojectStart);
+		$(".project-entry:last").append(insertDataInsideTag(HTMLprojectTitle, projects.projects[project].title));
+		$(".project-entry:last").append(insertDataInsideTag(HTMLprojectDates, projects.projects[project].dates));
+		$(".project-entry:last").append(insertDataInsideTag(HTMLprojectDescription, projects.projects[project].description));
+		for(imageURL in projects.projects[project].images) {
+			$(".project-entry:last").append(insertDataInsideTag(HTMLprojectImage, projects.projects[project].images[imageURL]));
+		}
+	}
+}
+
+function displayMap() {
+	$("#mapDiv").append(googleMap);
+}
+
+bio.display();
+work.display();
+education.display();
+projects.display();
+displayMap();
