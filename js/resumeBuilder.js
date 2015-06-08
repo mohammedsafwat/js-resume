@@ -1,17 +1,18 @@
 var bio = {
-	"contacts" : {
 	"name" : "Mohammed Safwat",
 	"role" : "Mobile Developer",
-	"mobile" : "010*******8",
-	"email" : "m.safwat@spyros-games.com",
-	"twitter" : "@_MohamadSafwat",
-	"github" : "mohammedsafwat",
-	"blog" : "http://www.mohammedsafwat.com",
-	"location" : "Cairo, Egypt"
+	"contacts" : {
+		"mobile" : "010*******8",
+		"email" : "m.safwat@spyros-games.com",
+		"twitter" : "@_MohamadSafwat",
+		"github" : "mohammedsafwat",
+		"blog" : "http://www.mohammedsafwat.com",
+		"location" : "Cairo, Egypt"
 	},
 	"bioPic" : "images/fry.jpg",
 	"welcomeMsg" : "Welcome to my resume!",
-	"skills" : ["Python", "Rails", "Ruby", "Scala", "Objective-C", "C++", "C#", "C", "Java"]
+	"skills" : ["Python", "Rails", "Ruby", "Scala", "Objective-C", "C++", "C#", "C", "Java"],
+	"display" : function() {}
 };
 
 var work = {
@@ -52,18 +53,19 @@ var schools = [
 
 var onlineCourses = [
 	{
-		"name" : "Javascript",
+		"name" : "Javascript Basics",
 		"data" : "April, 2015"
 	},
 	{
-		"name" : "Fullstack basics",
+		"name" : "Fullstack Foundations",
 		"data" : "April, 2015"
 	}
 ];
 
 var education = {
 	"schools" : schools,
-	"onlineCourses" : onlineCourses
+	"onlineCourses" : onlineCourses,
+	"display" : function() {}
 }
 
 var projects = {
@@ -72,9 +74,10 @@ var projects = {
 		"dates" : "Feb 2012",
 		"description" : "Twin stick shoot'em up mobile game",
 		"images" : ["http://38.media.tumblr.com/94db1bf261903f34490b2cb12b945113/tumblr_inline_nd4ivtXNWB1s9o6xc.png",
-					"http://38.media.tumblr.com/ecc4ca539086c5c44c726605c17df014/tumblr_inline_nd4iv2APVj1s9o6xc.png"
+					"http://38.media.tumblr.com/5e669db662fb96d7111249a16af5c83c/tumblr_inline_nd4ix3BxqZ1s9o6xc.png"
 					]
-	} ]
+		} ],
+	"display" : function() {} 
 }
 
 var tag_to_replace = "%data%";
@@ -84,8 +87,8 @@ function insertDataInsideTag(tag, data)
 }
 
 bio.display = function() {
-	$("#header").prepend(insertDataInsideTag(HTMLheaderRole, bio.contacts.role));
-	$("#header").prepend(insertDataInsideTag(HTMLheaderName, bio.contacts.name));
+	$("#header").prepend(insertDataInsideTag(HTMLheaderRole, bio.role));
+	$("#header").prepend(insertDataInsideTag(HTMLheaderName, bio.name));
 	$("#header").append(insertDataInsideTag(HTMLbioPic, bio.bioPic));
 	$("#header").append(insertDataInsideTag(HTMLwelcomeMsg, bio.welcomeMsg));
 
@@ -128,11 +131,11 @@ education.display = function() {
 	$("#education").append(HTMLschoolStart);
 	for(var i = 0; i < education["schools"].length; i++) {
 		var school = education["schools"][i];
-		$(".education-entry").append(insertDataInsideTag(HTMLschoolName, school.name) + insertDataInsideTag(HTMLschoolDegree, school.degree));
-		$(".education-entry").append(insertDataInsideTag(HTMLschoolDates, school.dates));
-		$(".education-entry").append("<br>");
-		$(".education-entry").append(insertDataInsideTag(HTMLschoolLocation, school.location));
-		$(".education-entry").append(insertDataInsideTag(HTMLschoolMajor, school.major));
+		$(".education-entry:last").append(insertDataInsideTag(HTMLschoolName, school.name) + insertDataInsideTag(HTMLschoolDegree, school.degree));
+		$(".education-entry:last").append(insertDataInsideTag(HTMLschoolDates, school.dates));
+		$(".education-entry:last").append("<br>");
+		$(".education-entry:last").append(insertDataInsideTag(HTMLschoolLocation, school.location));
+		$(".education-entry:last").append(insertDataInsideTag(HTMLschoolMajor, school.major));
 	}
 }
 
